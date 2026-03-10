@@ -1,1 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SISCO Eid Mubarak 2026 — Design 1</title>
 
+  <!-- Noto Kufi Arabic -->
+  https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap
+
+  <!-- html2canvas -->
+  https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
+
+  <style>
+    body{
+      margin:0;
+      padding:20px;
+      background:#f8f3e9;
+      font-family:"Noto Kufi Arabic", sans-serif;
+      color:#222;
+    }
+
+    .app{
+      max-width:780px;
+      margin:0 auto;
+      display:grid;
+      gap:16px;
+    }
+
+    h2{
+      text-align:center;
+      font-size:22px;
+      font-weight:600;
+      color:#0f172a;
+      margin:0 0 10px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+
+    input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:2px solid #0c4a6e55;
+      font-size:18px;
+      font-family:"Noto Kufi Arabic";
+    }
+
+    input:focus{
+      outline:none;
+      border-color:#0c4a6e;
+      box-shadow:0 0 0 3px #0c4a6e33;
+    }
+
+    .btn{
+      background:#0c4a6e;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      border:none;
+      margin-top:10px;
+    }
+
+    .preview-area{
+      display:flex;
+      justify-content:center;
+    }
+
+    .card{
+      width:500px;
+      aspect-ratio:1/1;
+      position:relative;
+      border-radius:14px;
+      overflow:hidden;
+      background:url('./assets/eid-card1-base.png') center/cover no-repeat;
+      border:1px solid #e6e0d6;
+    }
+
+    /* Preview name */
+    .name-place{
+      position:absolute;
+      bottom:13px;
+      width:100%;
+      text-align:center;
+      font-family:"Noto Kufi Arabic";
+      font-size:20px;
+      font-weight:600;
+      color:#6A5843;
+      text-shadow:0px 1px 3px rgba(0,0,0,0.45);
+      display:none;
+      z-index:10;
+    }
+
+    /* Export PNG */
+    .export-zone{
+      position:fixed;
+      left:-9999px;
+      top:-9999px;
+      width:600px;
+      height:600px;
+    }
+
+    .export-card{
+      width:600px;
+      height:600px;
+      position:relative;
+      background:url('./assets/eid-card1-base.png') center/cover no-repeat;
+    }
+
+    .export-name{
+      position:absolute;
+      bottom:17px;
+      width:100%;
+      text-align:center;
+      font-family:"Noto Kufi Arabic";
+      font-size:24px;
+      font-weight:600;
+      color:#6A5843;
+      text-shadow:0px 1px 3px rgba(0,0,0,0.45);
+      display:none;
+      z-index:10;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <h2>اكتب اسمك هنا 👇 / Type your name below 👇</h2>
+
+    <div class="panel">
+      <input id="fullName" placeholder="اكتب الاسم هنا | Type your name here">
+      <button class="btn" id="downloadBtn">Download Card</button>
+    </div>
+
+    <div class="panel preview-area">
+      <div class="card">
+        <div id="namePreview" class="name-place"></div>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="export-zone">
+      <div class="export-card">
+        <div id="nameExport" class="export-name"></div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const input = document.getElementById("fullName");
+  const namePrev = document.getElementById("namePreview");
+  const nameExp  = document.getElementById("nameExport");
+
+  function updateName(){
+    const v = input.value.trim();
+    if(v){
+      namePrev.style.display = 'block';
+      namePrev.textContent = v;
+
+      nameExp.style.display = 'block';
+      nameExp.textContent = v;
+    }else{
+      namePrev.style.display = 'none';
+      nameExp.style.display  = 'none';
+    }
+  }
+
+  input.addEventListener("input", updateName);
+
+  document.getElementById("downloadBtn").addEventListener("click", async () => {
+    const v = input.value.trim();
+    if(!v){ alert("اكتب الاسم أولاً"); return; }
+
+    const node = document.querySelector(".export-card");
+    const canvas = await html2canvas(node, {scale:2, useCORS:true});
+
+    const a = document.createElement("a");
+    a.download = v + ".png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  });
+</script>
+
+</body>
+</html>
