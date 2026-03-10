@@ -6,17 +6,17 @@
   <title>SISCO Eid Mubarak 2026 — Design 1</title>
 
   <!-- Load Noto Kufi Arabic correctly -->
-  https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Load html2canvas correctly -->
-  https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js</script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
     :root{
-      --name-color:#6A5843;       /* لون الاسم */
+      --name-color:#6A5843;           /* لون الاسم */
       --shadow:0 1px 3px rgba(0,0,0,.45);
-      --preview-bottom:13px;      /* مكان الاسم على الموقع */
-      --export-bottom:17px;       /* مكان الاسم في الصورة المصدّرة */
+      --preview-bottom:13px;          /* مكان الاسم على الموقع */
+      --export-bottom:17px;           /* مكان الاسم في الصورة المصدّرة */
     }
 
     html,body{height:100%}
@@ -59,6 +59,7 @@
       font-size:18px;
       font-family:"Noto Kufi Arabic", sans-serif;
     }
+    input::placeholder{color:#6b7280}
     input:focus{outline:none; border-color:#0c4a6e; box-shadow:0 0 0 3px #0c4a6e33}
 
     .btn{
@@ -83,8 +84,8 @@
       text-align:center;
       color:var(--name-color);
       font-family:"Noto Kufi Arabic", sans-serif;
-      font-size:20px;            /* أكبر من السابق */
-      font-weight:500;           /* أرفع من 600 */
+      font-size:20px;            /* أكبر من البطاقة الأولى */
+      font-weight:500;           /* أنحف شوي من 600 */
       text-shadow:var(--shadow);
       display:none; z-index:10;
     }
@@ -99,12 +100,12 @@
     /* الاسم داخل الصورة عند التحميل */
     .export-name{
       position:absolute; left:0; right:0;
-      bottom:var(--export-bottom);
+      bottom:var(--export-bottom);   /* 17px لضبط التطابق */
       text-align:center;
       color:var(--name-color);
       font-family:"Noto Kufi Arabic", sans-serif;
-      font-size:24px;            /* ≈ 20px للموقع */
-      font-weight:500;           /* أرفع */
+      font-size:24px;                /* ≈ 20px في المعاينة */
+      font-weight:500;
       text-shadow:var(--shadow);
       display:none; z-index:10;
     }
@@ -146,14 +147,13 @@
     if(v){
       namePrev.style.display = 'block';
       namePrev.textContent   = v;
-      nameExp.style.display  = 'block';
-      nameExp.textContent    = v;
+      nameExp .style.display = 'block';
+      nameExp .textContent   = v;
     }else{
       namePrev.style.display = 'none';
-      nameExp.style.display  = 'none';
+      nameExp .style.display = 'none';
     }
   }
-
   input.addEventListener('input', updateName);
 
   document.getElementById('downloadBtn').addEventListener('click', async () => {
